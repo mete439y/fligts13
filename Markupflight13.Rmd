@@ -1,0 +1,76 @@
+---
+title: "flight13"
+output: html_notebook
+---
+```{r}
+install.packages("tidyverse")
+```
+
+
+```{r}
+install.packages("nycflights13")
+```
+```{r}
+suppressPackageStartupMessages(library(tidyverse))
+```
+
+```{r}
+suppressPackageStartupMessages(library(nycflights13))
+```
+```{r}
+flights
+```
+
+
+```{r}
+Q1 <- flights%>%
+  group_by(carrier)%>%
+  summarise(dis_mean =round(mean(distance), 2))%>%
+  filter(carrier %in% c("AA", "EV", "FL"))%>%
+  as.data.frame()
+Q1
+
+```
+```{r}
+Q2 <- flights %>% 
+  group_by(month) %>% 
+  summarize(total = sum(flight))%>%
+  arrange(desc(total))%>%
+  head(1) %>%
+  as.data.frame()
+Q2
+
+```
+```{r}
+Q3 <- flights%>%
+  group_by(origin, dest)%>%
+  summarise(min_dist = min(distance))%>%
+  head(5)%>%
+  as.data.frame()
+Q3
+```
+```{r}
+Q4 <- flights%>%
+  group_by(origin, month, day)%>%
+  summarise(dis_mean = mean(distance), .groups = 'drop')%>%
+  arrange(desc(dis_mean))%>%
+  filter(origin == "JFK")%>%
+  head(5)%>%
+  as.data.frame()
+Q4
+```
+
+
+```{r}
+Q5 <- flights%>%
+  group_by(dest)%>%
+  filter(!is.na(arr_delay))%>%
+  summarise(max_arr_delay = max(arr_delay))%>%
+  #arrange(desc(max_arr_delay))%>%
+  filter(dest == "BOS" | dest == "ATL")
+Q5
+```
+
+
+
+
