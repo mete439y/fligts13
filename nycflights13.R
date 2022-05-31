@@ -33,7 +33,7 @@ Q4 <- flights%>%
   group_by(month, day)%>%
   filter(origin == "JFK")%>%
   summarise(mean_destance = round(mean(distance), 2), .groups = 'drop')%>%
-  arrange((mean_destance))%>%
+  arrange(desc(mean_destance))%>%
   head(5)%>%
   as.data.frame()
 Q4
