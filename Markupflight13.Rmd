@@ -33,19 +33,18 @@ Q1
 ```
 ```{r}
 Q2 <- flights %>% 
-  group_by(month) %>% 
-  summarize(total = sum(flight))%>%
-  arrange(desc(total))%>%
-  head(1) %>%
-  as.data.frame()
+  select(flight, month)%>%
+  #group_by(month)%>%
+  summarise(highest = max(flight))
 Q2
 
 ```
 ```{r}
 Q3 <- flights%>%
   group_by(origin, dest)%>%
-  summarise(min_dist = min(distance))%>%
-  head(5)%>%
+  summarise(mean_distance = min(distance))%>%
+  arrange(desc(mean_distance))
+  tail(5)%>%
   as.data.frame()
 Q3
 ```
@@ -66,7 +65,6 @@ Q5 <- flights%>%
   group_by(dest)%>%
   filter(!is.na(arr_delay))%>%
   summarise(max_arr_delay = max(arr_delay))%>%
-  #arrange(desc(max_arr_delay))%>%
   filter(dest == "BOS" | dest == "ATL")
 Q5
 ```
