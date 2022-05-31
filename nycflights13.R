@@ -23,16 +23,17 @@ Q2
 
 Q3 <- flights%>%
   group_by(origin, dest)%>%
-  summarise(min_dist = min(distance))%>%
-  head(5)%>%
-  as.data.frame()
+  summarise(min_dist = max(distance), .groups = 'drop')%>%
+  arrange((min_dist), head = FALSE)%>%
+  as.data.frame()%>%
+  head(5)
 Q3
 
 Q4 <- flights%>%
-  group_by(origin, month, day)%>%
-  summarise(dis_mean = mean(distance), .groups = 'drop')%>%
-  arrange(desc(dis_mean))%>%
+  group_by(month, day)%>%
   filter(origin == "JFK")%>%
+  summarise(mean_destance = round(mean(distance), 2), .groups = 'drop')%>%
+  arrange((mean_destance))%>%
   head(5)%>%
   as.data.frame()
 Q4
